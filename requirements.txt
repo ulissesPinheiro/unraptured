@@ -1,0 +1,5 @@
+ursina
+python-lsp-server
+ruff
+black
+isort
