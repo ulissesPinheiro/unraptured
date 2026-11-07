@@ -15,18 +15,25 @@ scene.fog_density = 0.08
 AmbientLight(color=color.rgba(20, 20, 20, 255))
 
 hall = Entity(
-    model="assets/models/hall.glb",
+    model="assets/models/prison.glb",
     position=(0, 0, 0),
     scale=(1, 1, 1),
     collider="mesh",
 )
 
+gun = Entity(
+        model="assets/models/makarov_PM.glb",
+        parent=camera,
+        position=(0.4,-0.3,0.8),
+        scale=(1,1,1),
+        )
+
 player = FirstPersonController(
-    model="cube", color=color.red, scale=(1, 1, 1), speed=2, jump_height=0
+    model="cube", color=color.red, scale=(1, 0.7, 1), speed=2, jump_height=0
 )
 
 player.cursor.visible = False
-player.position = (0, 0, -2)
+player.position = (0, 0, 2)
 player.rotation = (0, 0, 0)
 
 flashlight = SpotLight(
