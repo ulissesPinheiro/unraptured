@@ -1,6 +1,7 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from models.enemy import Enemy
+from models.cockroach import Cockroach
 from models.player import Player
 
 app = Ursina()
@@ -35,7 +36,7 @@ gun = Entity(
 
 player = Player()
 
-orus = Enemy(position=(0,0,10), player_ref=player) 
+cockroach = Cockroach(position=(0,0,12), player_ref=player)
 
 flashlight = SpotLight(
     parent=player, color=color.rgb(255, 255, 220), position=(0, 1.5, 0)

@@ -2,11 +2,12 @@ from ursina import *
 import time as pytime
 
 DISTANCE_SIGH = 5
+MODEL = "assets/models/enemy.glb"
 
 class Enemy(Entity):
-    def __init__(self, player_ref, position=(0,0,5)):
+    def __init__(self, player_ref, position=(0,0,5), model_ref=MODEL, distance_sigh=DISTANCE_SIGH):
         super().__init__(
-                model="assets/models/enemy.glb",
+                model=model_ref,
                 scale=1,
                 position=position,
                 collider="box"
@@ -14,6 +15,7 @@ class Enemy(Entity):
         self.speed = 0.5 
         self.hp = 3
         self.player = player_ref
+        self.distance_sigh = distance_sigh
 
         self.attack_cooldown = 1.5
         self.last_attack_time = 0
@@ -22,7 +24,7 @@ class Enemy(Entity):
 
         dist = distance_xz(self.position, self.player.position)
 
-        if dist < DISTANCE_SIGH :
+        if dist < self.distance_sigh :
             self.look_at_2d(self.player.position, axis='y')
             self.position += self.forward * self.speed * time.dt
 
