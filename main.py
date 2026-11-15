@@ -1,7 +1,6 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
-from panda3d.core import loadPrcFileData
 from models.cockroach import Cockroach
 from models.player import Player
 
@@ -20,8 +19,6 @@ AmbientLight(color=color.rgb(2, 2, 2))
 
 DirectionalLight(color=color.rgb(15,15,20), rotation=(45,-45, 45))
 
-loadPrcFileData("", "texture-minfilter nearest")
-loadPrcFileData("", "texture-magfilter nearest")
 
 bunker = Entity(
     model="assets/models/maps/bunker.glb",
@@ -40,7 +37,7 @@ if not player_spawn.isEmpty():
     print(f"Plyer status position: {player.position}")
 
 
-cockroach = Cockroach(player_ref=player, position_ref=(0,0,-5)) 
+#cockroach = Cockroach(player_ref=player, position_ref=(0,0,-5)) 
 
 def input(key):
     if key == 'p':

@@ -7,8 +7,9 @@ MODEL = "assets/models/cockroach.glb"
 DISTANCE_SIGH = 3
 SPEED = 1
 DAMAGE = 1
+MAX_HP = 1
 
-class Cockroach(Entity):
+class Cockroach(Entity, char):
     def __init__(self, player_ref, position_ref, model_ref=MODEL):
         super().__init__(
                          player_ref, 
@@ -21,7 +22,7 @@ class Cockroach(Entity):
         self.player = player_ref
         self.distance_sigh = DISTANCE_SIGH
         self.speed = SPEED
-        self.hp = 1
+        self.hp = MAX_HP 
         self.attack_damage = DAMAGE
 
         try:
