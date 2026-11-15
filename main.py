@@ -1,6 +1,7 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-from models.enemy import Enemy
+from ursina.shaders import lit_with_shadows_shader
+from panda3d.core import loadPrcFileData
 from models.cockroach import Cockroach
 from models.player import Player
 
@@ -9,43 +10,41 @@ app = Ursina()
 window.title = "PS1 Horror FPS"
 window.borderless = False
 window.fullscreen = False
-window.vsync = True
+window.vsync = False
 
 window.color = color.black
 scene.fog_color = color.black
-scene.fog_density = 0.08
+scene.fog_density = 0.15
 
-AmbientLight(color=color.rgb(10, 10, 10))
+AmbientLight(color=color.rgb(2, 2, 2))
 
-DirectionalLight(color=color.rgb(30,30,40), rotation=(45,-45, 45))
+DirectionalLight(color=color.rgb(15,15,20), rotation=(45,-45, 45))
 
+loadPrcFileData("", "texture-minfilter nearest")
+loadPrcFileData("", "texture-magfilter nearest")
 
-prison = Entity(
-    model="assets/models/prison.glb",
+bunker = Entity(
+    model="assets/models/maps/bunker.glb",
     position=(0, 0, 0),
-    scale=(1, 1, 1),
+    scale=1,
     collider="mesh",
 )
 
-gun = Entity(
-        model="assets/models/makarov_PM.glb",
-        parent=camera,
-        position=(0.4,-0.3,0.8),
-        scale=(1,1,1),
-        )
+player_spawn = bunker.find("**/PlayerSpawn")
 
-player = Player()
+player = None
 
-cockroach = Cockroach(position=(0,0,12), player_ref=player)
+if not player_spawn.isEmpty():
+    player_spawn_cord = player_spawn.getPos(render)
+    player = Player(position_ref=player_spawn_cord)
+    print(f"Plyer status position: {player.position}")
 
-flashlight = SpotLight(
-    parent=player, color=color.rgb(255, 255, 220), position=(0, 1.5, 0)
-)
-flashlight.look_at(player.forward)
-flashlight.fov = 70
-flashlight.brightness = 1 
+
+cockroach = Cockroach(player_ref=player, position_ref=(0,0,-5)) 
 
 def input(key):
+    if key == 'p':
+        print(f"Position player status: {player.position}")
     if key == "left mouse down":
         gun.position += (0, 0.05, -0.1)
         invoke(lambda: setattr(gun, 'position', (0.4, -0.3, 0.8)), delay=0.1)

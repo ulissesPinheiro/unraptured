@@ -4,18 +4,25 @@ from direct.actor.Actor import Actor
 import time as pytime
 
 MODEL = "assets/models/cockroach.glb"
+DISTANCE_SIGH = 3
+SPEED = 1
+DAMAGE = 1
 
-class Cockroach(Enemy):
-    def __init__(self, player_ref, position=(0,0,5)):
+class Cockroach(Entity):
+    def __init__(self, player_ref, position_ref, model_ref=MODEL):
         super().__init__(
                          player_ref, 
-                         position=position,
+                         position=position_ref,
                          model_ref=None
                          )
 
         self.actor = Actor(MODEL) 
         self.actor.reparentTo(self)
+        self.player = player_ref
+        self.distance_sigh = DISTANCE_SIGH
+        self.speed = SPEED
         self.hp = 1
+        self.attack_damage = DAMAGE
 
         try:
            self.actor.loop('idle') 
