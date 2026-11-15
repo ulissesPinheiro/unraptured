@@ -1,11 +1,12 @@
 from ursina import *
+from models.char import Char
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 SPEED=2
 MAX_HP=100
 
 
-class Player(FirstPersonController):
+class Player(FirstPersonController, Char):
     def __init__(self, position_ref=0, scale_ref=1):
         super().__init__(
             model="cube",

@@ -1,4 +1,4 @@
-from models.enemy import Enemy
+from models.char import Char
 from ursina import *
 from direct.actor.Actor import Actor
 import time as pytime
@@ -9,7 +9,7 @@ SPEED = 1
 DAMAGE = 1
 MAX_HP = 1
 
-class Cockroach(Entity, char):
+class Cockroach(Entity, Char):
     def __init__(self, player_ref, position_ref, model_ref=MODEL):
         super().__init__(
                          player_ref, 
