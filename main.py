@@ -2,11 +2,12 @@ from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
 from models.cockroach import Cockroach
-from models.player import Player
+from models.ursula import Ursula
+from models.makarov_magazine import MakarovMagazine
 
 app = Ursina()
 
-window.title = "PS1 Horror FPS"
+window.title = "PS1 Horror FPS - Unrapture"
 window.borderless = False
 window.fullscreen = False
 window.vsync = False
@@ -33,20 +34,36 @@ player = None
 
 if not player_spawn.isEmpty():
     player_spawn_cord = player_spawn.getPos(render)
-    player = Player(position_ref=player_spawn_cord)
+    player = Ursula(position_ref=player_spawn_cord)
     print(f"Plyer status position: {player.position}")
 
 
 #cockroach = Cockroach(player_ref=player, position_ref=(0,0,-5)) 
 
 def input(key):
+    if key == 'r':
+        player.manualRack()
+
     if key == 'p':
         print(f"Position player status: {player.position}")
-    if key == "left mouse down":
-        gun.position += (0, 0.05, -0.1)
-        invoke(lambda: setattr(gun, 'position', (0.4, -0.3, 0.8)), delay=0.1)
 
+    if key == 'q':
+        print("Mag change")
+        player.changeMagazine(magazine=MakarovMagazine())
+
+    if key == 'c':
+        print("Check chamber")
+        player.checkChumber()
+
+    if key == 'right mouse down':
+        player.aim()
+
+    if key == 'x':
+        player.checkMagazine()
+
+    if key == "left mouse down":
         hit_info = raycast(camera.world_position, camera.forward, distance=20)
+        player.shoot()
 
         if(hit_info.hit):
             print(f"Hit the: {hit_info.entity}")
