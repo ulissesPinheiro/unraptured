@@ -3,25 +3,28 @@ class GunFire():
     def __init__(self, magazine):
 
         self.magazine = magazine 
-        self.chamber = [0] 
+        self.chambered = False 
+
+
+    def _feed(self):
+        if self.magazine is not None and not self.magazine.isEmpty():
+            self.magazine.removeAmmo()
+            self.chambered = True
+        else:
+            self.chambered = False
 
     def rack(self):
-        self.motorRack()
-        
+        self._feed()
+
 
     def shoot(self):
-        self.motorRack()
-
-    def motorRack(self):
-        if not self.hasBulletChamber():
-            self.magazine.removeAmmo()
-            self.addBulletChamber()
-        else:
-            if not self.magazine.isEmpty():
-                self.magazine.removeAmmo()
-                self.addBulletChamber()
-            else:
-                self.dropBulletChamber();
+        if not self.chambered:
+            return False
+        
+        self.chambered = False
+        self._feed()
+        return True
+        
 
     def addMagazine(self, magazine):
         self.magazine = magazine
@@ -31,25 +34,14 @@ class GunFire():
         self.magazine = None
         return bullets
 
-    def addBulletChamber(self):
-        self.chamber[0] = 1
-
-    def dropBulletChamber(self):
-        if self.hasBulletChamber():
-            self.chamber[0] = 0
-
     def hasBulletChamber(self):
-        if self.chamber[0] == 1:
-            return True
-        else:
-            self.chamber[0] == 0
-            return False
-
+        return self.chambered
+   
     def printHasBulletChamber(self):
-        print(f"Bullet in chumber: {self.chamber[0]}")
+        print(f"Bullet in chumber: {self.hasBulletChamber()}")
 
     def getQuantityMagazineBullets(self):
-        return self.magazine.quantity
+        return self.magazine.quantity if self.magazine else 0
 
     def printQuantityMagazine(self):
         self.magazine.printQuantity()
