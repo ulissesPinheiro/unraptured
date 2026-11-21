@@ -4,6 +4,7 @@ from ursina.shaders import lit_with_shadows_shader
 from models.cockroach import Cockroach
 from models.ursula import Ursula
 from models.makarov_magazine import MakarovMagazine
+from game_manager import GameManager
 from ps1_render import PS1Renderer
 
 app = Ursina()
@@ -31,6 +32,8 @@ bunker = Entity(
     collider="mesh",
 )
 
+game = GameManager()
+
 # flashlight = SpotLight(
 #         parent=camera,
 #         position=(0,0,0),
@@ -44,13 +47,13 @@ bunker = Entity(
 
 player_spawn = bunker.find("**/PlayerSpawn")
 
-player = None
+if player_spawn.isEmpty():
+    raise RuntimeError("No spawn point")
 
-if not player_spawn.isEmpty():
-    player_spawn_cord = player_spawn.getPos(render)
-    player = Ursula(position_ref=player_spawn_cord)
-    print(f"Plyer status position: {player.position}")
+player = Ursula(position_ref=player_spawn.getPos(render))
 
+player.on_hurt = game.on_player_hurt
+player.on_death = game.on_player_death
 
 #cockroach = Cockroach(player_ref=player, position_ref=(0,0,-5)) 
 
@@ -75,14 +78,13 @@ def input(key):
     if key == 'x':
         player.checkMagazine()
 
+    if key == "e":
+        player.interact()
+
+    if key == "right mouse down":
+        player.aim()
+
     if key == "left mouse down":
-        hit_info = raycast(camera.world_position, camera.forward, distance=20)
         player.shoot()
-
-        if(hit_info.hit):
-            print(f"Hit the: {hit_info.entity}")
-
-            if hasattr(hit_info.entity, 'take_damage'):
-                hit_info.entity.take_damage(1)
-
+    
 app.run()

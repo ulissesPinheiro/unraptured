@@ -5,10 +5,10 @@ class Magazine():
         self.quantity = quantity 
         self.max_ammo = max_ammo 
 
-    def addAmmo(self, ammount):
+    def addAmmo(self, amount):
         if not self.isFull():
-            if ammount <= self.max_ammo:
-                self.quantity += ammount 
+            if amount <= self.max_ammo:
+                self.quantity += amount 
                 self.printQuantity()
 
     def removeAmmo(self):

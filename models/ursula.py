@@ -20,7 +20,7 @@ class Ursula(FirstPersonController, Player):
         )
         Player.__init__(self)
         makarov_magazine = MakarovMagazine()
-        makarov_magazine.addAmmo(ammount=8)
+        makarov_magazine.addAmmo(amount=8)
         makarov = Makarov(magazine=makarov_magazine)
        
         # inventory
@@ -66,9 +66,9 @@ class Ursula(FirstPersonController, Player):
 
         new_mag = MakarovMagazine()
         to_load = min(self.inventory[0], new_mag.max_ammo)
-        new_mag.addAmmo(ammount=to_load)
-        self.removeItemInventory(slot=0, ammount=new_mag.max_ammo)
-        self.addItemInventory(slot=0, ammount=gun.removeMagazine())
+        new_mag.addAmmo(amount=to_load)
+        self.removeItemInventory(slot=0, amount=new_mag.max_ammo)
+        self.addItemInventory(slot=0, amount=gun.removeMagazine())
         gun.changeMagazine(magazine=new_mag)
 
     def checkChumber(self):
