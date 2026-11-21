@@ -27,7 +27,9 @@ class GunFire():
         self.magazine = magazine
 
     def removeMagazine(self):
+        bullets = self.getQuantityMagazineBullets()
         self.magazine = None
+        return bullets
 
     def addBulletChamber(self):
         self.chamber[0] = 1
@@ -45,6 +47,9 @@ class GunFire():
 
     def printHasBulletChamber(self):
         print(f"Bullet in chumber: {self.chamber[0]}")
+
+    def getQuantityMagazineBullets(self):
+        return self.magazine.quantity
 
     def printQuantityMagazine(self):
         self.magazine.printQuantity()

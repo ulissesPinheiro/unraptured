@@ -48,11 +48,12 @@ class Makarov(GunFire):
 
     def changeMagazine(self, magazine):
         if not self.aim_mode:
-            GunFire.removeMagazine(self)
             GunFire.addMagazine(self, magazine=magazine)
             self.actor.play('change_magazine')
 
-        
+    def removeMagazine(self):
+        return GunFire.removeMagazine(self)
+
     def checkChumber(self):
         if not self.aim_mode:
             GunFire.printHasBulletChamber(self) 

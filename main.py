@@ -4,22 +4,25 @@ from ursina.shaders import lit_with_shadows_shader
 from models.cockroach import Cockroach
 from models.ursula import Ursula
 from models.makarov_magazine import MakarovMagazine
+from ps1_render import PS1Renderer
 
 app = Ursina()
 
-window.title = "PS1 Horror FPS - Unrapture"
-window.borderless = False
-window.fullscreen = False
-window.vsync = False
+window.borderless = True
+window.fullscreen = True
+window.vsync = True
 
-window.color = color.black
-scene.fog_color = color.black
-scene.fog_density = 0.15
 
-AmbientLight(color=color.rgb(2, 2, 2))
+# window.color = color.black
+# scene.fog_color = color.black
+# scene.fog_density = 0.12
 
-DirectionalLight(color=color.rgb(15,15,20), rotation=(45,-45, 45))
+#AmbientLight(color=color.rgba(0,0,0,255))
 
+ps1 = PS1Renderer(
+        width = 320,
+        height = 180
+        )
 
 bunker = Entity(
     model="assets/models/maps/bunker.glb",
@@ -27,6 +30,17 @@ bunker = Entity(
     scale=1,
     collider="mesh",
 )
+
+# flashlight = SpotLight(
+#         parent=camera,
+#         position=(0,0,0),
+#         rotation=(0,0,0),
+#         color=color.rgb(255,235,200)
+#         )
+#
+# flashlight.fov = 55
+# flashlight.range = 18
+# flashlight.enabled = True
 
 player_spawn = bunker.find("**/PlayerSpawn")
 
@@ -49,7 +63,7 @@ def input(key):
 
     if key == 'q':
         print("Mag change")
-        player.changeMagazine(magazine=MakarovMagazine())
+        player.changeMagazine()
 
     if key == 'c':
         print("Check chamber")
