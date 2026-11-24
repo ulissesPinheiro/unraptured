@@ -26,7 +26,7 @@ ps1 = PS1Renderer(
         )
 
 bunker = Entity(
-    model="assets/models/maps/bunker.glb",
+    model="assets/models/maps/sewer.glb",
     position=(0, 0, 0),
     scale=1,
     collider="mesh",
@@ -86,5 +86,9 @@ def input(key):
 
     if key == "left mouse down":
         player.shoot()
+    if key == "f1":
+        ps1.toggle()
+    if key == "f2":
+       PS1Renderer.debug_regions() 
     
 app.run()

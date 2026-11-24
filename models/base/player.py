@@ -17,7 +17,6 @@ class Player():
         self.weapon_melee =  None
         self.inventory = [0] 
         self.death = False
-        self.y=-1
 
         self.on_hurt = None
         self.on_death = None

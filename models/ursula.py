@@ -11,7 +11,7 @@ MAX_HP=100
 
 
 class Ursula(FirstPersonController, Player):
-    def __init__(self, position_ref=0, scale_ref=1):
+    def __init__(self, position_ref=0, scale_ref=(1,0.7,1)):
         FirstPersonController.__init__(
             self,
             model="cube",
