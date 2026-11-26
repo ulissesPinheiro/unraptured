@@ -6,7 +6,7 @@ SCREEN_SORT = 5
 
 class PS1Renderer:
 
-    def __init__(self, width=320, height=180, clear_color=(0, 0, 0, 1)):
+    def __init__(self, width=320, height=180, clear_color=color.gray):
         self.width = width
         self.height = height
 

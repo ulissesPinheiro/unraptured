@@ -3,6 +3,7 @@ from enum import Enum, auto
 from ursina import *
 from direct.actor.Actor import Actor
 from models.base.gun_fire import GunFire
+from panda3d.core import AmbientLight as PandaAmbientLight
 
 
 DAMAGE = 5
@@ -54,10 +55,17 @@ class Makarov(GunFire):
 
         self.actor = Actor(MODEL)
         self.actor.reparentTo(camera)
+        self.actor.setShaderOff(1)
 
         self.state = None
         self.state_timer = 0.0
         self.change_state(GunState.IDLE)
+        
+        gun_light = PandaAmbientLight("gun_light")
+        gun_light.setColor((0.35, 0.33, 0.30, 1))
+        gun_light_np = self.actor.attachNewNode(gun_light)
+        self.actor.setLight(gun_light_np)
+
 
     def can(self, action):
         return self.state in ALLOWED[action]

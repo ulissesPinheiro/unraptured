@@ -11,13 +11,14 @@ MAX_HP=100
 
 
 class Ursula(FirstPersonController, Player):
-    def __init__(self, position_ref=0, scale_ref=(1,0.7,1)):
+    def __init__(self, position_ref=0, scale_ref=1):
         FirstPersonController.__init__(
             self,
             model="cube",
             scale=scale_ref,
             position=position_ref
         )
+        self.camera_pivot.y = 1.6
         Player.__init__(self)
         makarov_magazine = MakarovMagazine()
         makarov_magazine.addAmmo(amount=8)

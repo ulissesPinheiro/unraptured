@@ -14,18 +14,18 @@ window.fullscreen = True
 window.vsync = True
 
 
-# window.color = color.black
-# scene.fog_color = color.black
-# scene.fog_density = 0.12
+window.color = color.gray
+scene.fog_color = color.black
+scene.fog_density = 0.12
 
-#AmbientLight(color=color.rgba(0,0,0,255))
+AmbientLight(color=color.rgba(0.3,0.3,0.3,255))
 
 ps1 = PS1Renderer(
         width = 320,
         height = 180
         )
 
-bunker = Entity(
+sewer = Entity(
     model="assets/models/maps/sewer.glb",
     position=(0, 0, 0),
     scale=1,
@@ -34,18 +34,19 @@ bunker = Entity(
 
 game = GameManager()
 
-# flashlight = SpotLight(
-#         parent=camera,
-#         position=(0,0,0),
-#         rotation=(0,0,0),
-#         color=color.rgb(255,235,200)
-#         )
-#
-# flashlight.fov = 55
-# flashlight.range = 18
-# flashlight.enabled = True
+flashlight = SpotLight(
+        parent=camera,
+        position=(0,0,0),
+        rotation=(0,0,0),
+        color=color.rgb(255,235,200)
+        )
 
-player_spawn = bunker.find("**/PlayerSpawn")
+flashlight.fov = 55
+flashlight.range = 18
+flashlight.enabled = True
+render.setShaderAuto()
+
+player_spawn = sewer.find("**/PlayerSpawn")
 
 if player_spawn.isEmpty():
     raise RuntimeError("No spawn point")
